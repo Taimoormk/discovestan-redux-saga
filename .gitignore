@@ -57,3 +57,12 @@ buck-out/
 
 # DS_Store
 .DS_Store
+
+# Discovestan private content
+config
+reducers
+actions
+constats
+sagas
+image
+helpers
