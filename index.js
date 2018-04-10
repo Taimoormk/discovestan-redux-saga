@@ -1,4 +1,40 @@
+// ########## Import Dependencies Here ##########
+import React, { Component } from 'react';
 import { AppRegistry } from 'react-native';
-import App from './App';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import reduxThunk from 'redux-thunk';
+import reduxLogger from 'redux-logger';
+import createSagaMiddleware from 'redux-saga';
 
-AppRegistry.registerComponent('discovestan', () => App);
+// ########## Import Screens Here ##########
+
+// ########## Import Components Here ##########
+import App from './App';
+import { rootReducer } from './src/reducers';
+import rootSaga from './sagas';
+
+const sagaMiddleware = createSagaMiddleware();
+
+let store = createStore(
+  rootReducer,
+  window.devToolsExtension && window.devToolsExtension(),
+  applyMiddleware(
+    sagaMiddleware, 
+    reduxLogger
+  )
+);
+
+sagaMiddleware.run(rootSaga);
+
+class Discovestan extends Component {
+  render() {
+    return(
+      <Provider store={store}>
+        <App />
+      </Provider>
+    );
+  }
+}
+
+AppRegistry.registerComponent('Discovestan', () => Discovestan);

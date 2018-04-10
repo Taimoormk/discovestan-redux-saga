@@ -62,7 +62,7 @@ buck-out/
 config
 reducers
 actions
-constats
+constants
 sagas
 image
 helpers
