@@ -33,23 +33,26 @@ import { connect } from 'react-redux';
 // ########## Import Components Here ##########
 import { contentText, contentURL, reduceStringLength } from '../helpers/helpers';
 import Emojis from '../components/Emojis';
-import { readMobilePostsAction } from '../actions';
+import * as actions from '../actions';
 
 const { height, width } = Dimensions.get('window');
 
 class Mobile extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    let { readPostsAction } = this.props;
+    readPostsAction();
   }
 
-  componentWillMount() {
-    let { readMobilePostsAction } = this.props;
-    readMobilePostsAction();
-  }
+  // componentWillMount() {
+  //   let { readMobilePostsAction } = this.props;
+  //   readMobilePostsAction();
+  // }
 
   render() {
     let { data } = this.props;
+    console.log('mobiledata', data)
     return (
       <Container>
         <View>
@@ -176,4 +179,4 @@ function mapStateToProps({ launchAppReducer }) {
   }
 }
 
-export default connect(mapStateToProps, { readMobilePostsAction })(Mobile);
+export default connect(mapStateToProps, { readPostsAction: actions.readPostsAction })(Mobile);

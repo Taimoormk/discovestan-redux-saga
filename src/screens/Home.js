@@ -38,6 +38,8 @@ import Emojis from '../components/Emojis';
 
 const { height, width } = Dimensions.get('window');
 
+let dirs = RNFetchBlob.fs.dirs;
+
 class Home extends Component {
 
   constructor(props){
@@ -56,7 +58,7 @@ class Home extends Component {
   componentDidMount() {
     if (Platform.OS === 'ios') {
       console.log('reading cache');
-      let fileUri = '/Users/taimoorkhan/Library/Developer/CoreSimulator/Devices/2149B687-A347-4C12-82FB-B83CA14B59D8/data/Containers/Data/Application/573F1E1B-76B9-4192-BD16-8776CD14D45A/Library/Caches/Discovestan';
+      let fileUri = '/Users/taimoorkhan/Library/Developer/CoreSimulator/Devices/748493BF-3269-46C7-98C2-502FE8F8F05A/data/Containers/Data/Application/F1204CC6-FE0A-48C4-9222-EB342B284663/Library/Caches/Discovestan';
       let arr = fileUri.split('/');
       const dirs = RNFetchBlob.fs.dirs;
       filePath = `${dirs.CacheDir}/${arr[arr.length - 1]}`;
@@ -67,7 +69,6 @@ class Home extends Component {
       .readFile(filePath, 'utf8')
       .then((res) => {
         jsonData = JSON.parse(res);
-        console.log('data', jsonData);
         return jsonData;
       })
       .then((jsonData) => {

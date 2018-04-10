@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { AppRegistry } from 'react-native';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import reduxThunk from 'redux-thunk';
 import reduxLogger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 
@@ -12,7 +11,7 @@ import createSagaMiddleware from 'redux-saga';
 // ########## Import Components Here ##########
 import App from './App';
 import { rootReducer } from './src/reducers';
-import rootSaga from './sagas';
+import rootSaga from './src/sagas';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -37,4 +36,4 @@ class Discovestan extends Component {
   }
 }
 
-AppRegistry.registerComponent('Discovestan', () => Discovestan);
+AppRegistry.registerComponent('discovestan', () => Discovestan);
