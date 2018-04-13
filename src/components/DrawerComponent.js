@@ -13,7 +13,6 @@ import DrawerListItem from '../components/DrawerListItem';
 
 export default class DrawerComponent extends Component {
   render() {
-    console.log('DrawerComponent props', this.props)
     return (
       <View style={styles.container}>
         <View style={styles.header}>

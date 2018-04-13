@@ -60,8 +60,7 @@ buck-out/
 
 # Discovestan private content
 config
-reducers
-actions
+
 constants
 sagas
 image

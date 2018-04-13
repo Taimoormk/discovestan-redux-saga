@@ -10,7 +10,8 @@ import {
   StyleSheet,
   Platform,
   ListView,
-  StatusBar
+  StatusBar,
+  FlatList
 } from 'react-native';
 import {
   Container,
@@ -37,6 +38,31 @@ import * as actions from '../actions';
 
 const { height, width } = Dimensions.get('window');
 
+const myData = [
+  {
+    title: "my title",
+    attachments: [
+      {
+        url: "https://stackoverflow.com/questions/32617066/wrap-element-to-new-line-row-using-flexbox"
+      }
+    ],
+    excerpt: "this is an excerpt",
+  },
+  {
+    title: "my title",
+    attachments: [
+      {
+        url: "https://stackoverflow.com/questions/32617066/wrap-element-to-new-line-row-using-flexbox"
+      }
+    ],
+    excerpt: "this is an excerpt",
+  }
+]
+
+// const dataSource = new ListView.DataSource({
+//   rowHasChanged: (r1, r2) => r1 !== r2
+// });
+
 class Mobile extends Component {
 
   constructor(props) {
@@ -52,38 +78,41 @@ class Mobile extends Component {
 
   render() {
     let { data } = this.props;
-    console.log('mobiledata', data)
+    // console.log('mobile screen', ata);
+    // let ds = dataSource.cloneWithRows(data);
+    // console.log('mobile screen ds', ds)
     return (
-      <Container>
+      <View>
         <View>
           <StatusBar
             barStyle="dark-content"
           />
         </View>
-        <ListView
+        <FlatList
           // refreshControl={
           // 	<RefreshControl
           // 		refreshing={this.state.isRefreshing}
 
           // 	/>
           // }
-          dataSource={data}
-          renderRow={
-            (rowData) =>
+          data={data}
+          extraData={data}
+          renderItem={
+            ({ item }) => (
               <View>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('HomeDetails', { rowData })}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('HomeDetails', { item })}>
                   <Card>
                     <CardItem header>
-                      <Text style={styles.titleHeading}>{rowData.title}</Text>
+                      <Text style={styles.titleHeading}>{item.title}</Text>
                     </CardItem>
                     <CardItem cardBody>
                       <Content style={styles.cardContainer}>
                         <CustomCachedImage
                           component={FitImage}
-                          source={{ uri: contentURL(rowData.attachments[0].url) }}
+                          source={{ uri: contentURL(item.attachments[0].url) }}
                           style={{ width: width, height: 200 }}
                         />
-                        <HTML tagsStyles={bodyText} html={reduceStringLength(contentText(rowData.excerpt))} />
+                        <HTML tagsStyles={bodyText} html={reduceStringLength(contentText(item.excerpt))} />
                       </Content>
                     </CardItem>
                     <CardItem style={styles.borderLine}>
@@ -91,9 +120,9 @@ class Mobile extends Component {
                         <Animatable.View animation="pulse" easing="ease-out" iterationCount="infinite">
                           <TouchableOpacity onPress={() => {
                             Share.open({
-                              title: `${rowData.title.rendered}`,
-                              message: `Hello there! look what an interesting read  "${rowData.title.rendered}" I have found for you, check it out it's awesome!`,
-                              url: `vinthub://home/${rowData.slug}`,
+                              title: `${item.title.rendered}`,
+                              message: `Hello there! look what an interesting read  "${item.title.rendered}" I have found for you, check it out it's awesome!`,
+                              url: `vinthub://home/${item.slug}`,
                               subject: 'What an awesome read'
                             })
                           }}>
@@ -108,9 +137,10 @@ class Mobile extends Component {
                   </Card>
                 </TouchableOpacity>
               </View>
+            )
           }
         />
-      </Container>
+      </View>
     );
   }
 }
@@ -168,14 +198,15 @@ const bodyText = {
   },
 };
 
-const dataSource = new ListView.DataSource({
-  rowHasChanged: (r1, r2) => r1 !== r2
-});
+// const dataSource = new ListView.DataSource({
+//   rowHasChanged: (r1, r2) => r1 !== r2
+// });
 
 function mapStateToProps({ launchAppReducer }) {
   return {
     isLoading: launchAppReducer.isLoading,
-    data: dataSource.cloneWithRows(launchAppReducer.data)
+    // data: dataSource.cloneWithRows(launchAppReducer.data)
+    data: launchAppReducer.data
   }
 }
 
