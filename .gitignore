@@ -59,10 +59,11 @@ buck-out/
 .DS_Store
 
 # Discovestan private content
-config
-
-constants
-sagas
-image
-helpers
-api
+# config
+# reducers
+# actions
+# constants
+# sagas
+# image
+# helpers
+# api

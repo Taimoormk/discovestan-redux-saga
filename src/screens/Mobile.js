@@ -59,10 +59,6 @@ const myData = [
   }
 ]
 
-// const dataSource = new ListView.DataSource({
-//   rowHasChanged: (r1, r2) => r1 !== r2
-// });
-
 class Mobile extends Component {
 
   constructor(props) {
@@ -71,16 +67,9 @@ class Mobile extends Component {
     readPostsAction();
   }
 
-  // componentWillMount() {
-  //   let { readMobilePostsAction } = this.props;
-  //   readMobilePostsAction();
-  // }
-
   render() {
-    let { data } = this.props;
-    // console.log('mobile screen', ata);
-    // let ds = dataSource.cloneWithRows(data);
-    // console.log('mobile screen ds', ds)
+    let { ds } = this.props;
+    console.log('mobile screen', ds)
     return (
       <View>
         <View>
@@ -89,14 +78,7 @@ class Mobile extends Component {
           />
         </View>
         <FlatList
-          // refreshControl={
-          // 	<RefreshControl
-          // 		refreshing={this.state.isRefreshing}
-
-          // 	/>
-          // }
-          data={data}
-          extraData={data}
+          data={ds}
           renderItem={
             ({ item }) => (
               <View>
@@ -198,15 +180,10 @@ const bodyText = {
   },
 };
 
-// const dataSource = new ListView.DataSource({
-//   rowHasChanged: (r1, r2) => r1 !== r2
-// });
-
 function mapStateToProps({ launchAppReducer }) {
   return {
     isLoading: launchAppReducer.isLoading,
-    // data: dataSource.cloneWithRows(launchAppReducer.data)
-    data: launchAppReducer.data
+    ds: launchAppReducer.data
   }
 }
 

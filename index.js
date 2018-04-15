@@ -15,7 +15,7 @@ import rootSaga from './src/sagas';
 
 const sagaMiddleware = createSagaMiddleware();
 
-let store = createStore(
+const store = createStore(
   rootReducer,
   window.devToolsExtension && window.devToolsExtension(),
   applyMiddleware(

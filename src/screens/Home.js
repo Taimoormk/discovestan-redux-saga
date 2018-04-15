@@ -32,7 +32,7 @@ import { connect } from 'react-redux';
 // ########## Import Screens Here ##########
 
 // ########## Import Components Here ##########
-import { fetchPostsAction } from '../actions';
+import * as actions from '../actions';
 import { contentText, contentURL, reduceStringLength } from '../helpers/helpers';
 import Emojis from '../components/Emojis';
 
@@ -57,8 +57,8 @@ class Home extends Component {
 
   componentDidMount() {
     if (Platform.OS === 'ios') {
-      console.log('reading cache');
-      let fileUri = '/Users/taimoorkhan/Library/Developer/CoreSimulator/Devices/748493BF-3269-46C7-98C2-502FE8F8F05A/data/Containers/Data/Application/F1204CC6-FE0A-48C4-9222-EB342B284663/Library/Caches/Discovestan';
+
+      let fileUri = '/Users/taimoorkhan/Library/Developer/CoreSimulator/Devices/748493BF-3269-46C7-98C2-502FE8F8F05A/data/Containers/Data/Application/CA1D7B3F-AAED-488B-B081-A034EEE3B267/Library/Caches/Discovestan';
       let arr = fileUri.split('/');
       const dirs = RNFetchBlob.fs.dirs;
       filePath = `${dirs.CacheDir}/${arr[arr.length - 1]}`;
@@ -69,6 +69,7 @@ class Home extends Component {
       .readFile(filePath, 'utf8')
       .then((res) => {
         jsonData = JSON.parse(res);
+        console.log(dirs.CacheDir);
         return jsonData;
       })
       .then((jsonData) => {
@@ -195,4 +196,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { fetchPostsAction })(Home);
+export default connect(mapStateToProps, { fetchPostsAction: actions.fetchPostsAction })(Home);

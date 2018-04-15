@@ -49,41 +49,41 @@ export default class Category extends Component {
     }
   }
 
-  componentDidMount() {
-    if (Platform.OS === 'ios') {
-      console.log('reading cache');
-      let fileUri = '/Users/taimoorkhan/Library/Developer/CoreSimulator/Devices/2149B687-A347-4C12-82FB-B83CA14B59D8/data/Containers/Data/Application/573F1E1B-76B9-4192-BD16-8776CD14D45A/Library/Caches/Discovestan';
-      let arr = fileUri.split('/');
-      const dirs = RNFetchBlob.fs.dirs;
-      filePath = `${dirs.CacheDir}/${arr[arr.length - 1]}`;
-    } else {
-      filePath = '/data/user/0/com.discovestan/cache/Discovestan';
-    }
-    RNFetchBlob.fs
-      .readFile(filePath, 'utf8')
-      .then((res) => {
-        jsonData = JSON.parse(res);
-        console.log('data', jsonData);
-        return jsonData;
-      })
-      .then((jsonData) => {
-        let iterateData = jsonData.posts;
-        console.log('from cache', iterateData);
-        catergoryData = [];
-        for(var i=0; i<iterateData.length; i++) {
-          let indexData = iterateData[i];
-          let categoryCheck = indexData.categories[0].slug;
-          if(categoryCheck === 'category') {
-            mobileData.push(indexData);
-            console.log('mobile from cache', categoryData)
-          }
-        }
-        this.setState({
-          isLoading: false,
-          dataSource: this.state.dataSource.cloneWithRows(categoryData),
-        })
-      });
-  }
+  // componentDidMount() {
+  //   if (Platform.OS === 'ios') {
+  //     console.log('reading cache');
+  //     let fileUri = '/Users/taimoorkhan/Library/Developer/CoreSimulator/Devices/2149B687-A347-4C12-82FB-B83CA14B59D8/data/Containers/Data/Application/573F1E1B-76B9-4192-BD16-8776CD14D45A/Library/Caches/Discovestan';
+  //     let arr = fileUri.split('/');
+  //     const dirs = RNFetchBlob.fs.dirs;
+  //     filePath = `${dirs.CacheDir}/${arr[arr.length - 1]}`;
+  //   } else {
+  //     filePath = '/data/user/0/com.discovestan/cache/Discovestan';
+  //   }
+  //   RNFetchBlob.fs
+  //     .readFile(filePath, 'utf8')
+  //     .then((res) => {
+  //       jsonData = JSON.parse(res);
+  //       console.log('data', jsonData);
+  //       return jsonData;
+  //     })
+  //     .then((jsonData) => {
+  //       let iterateData = jsonData.posts;
+  //       console.log('from cache', iterateData);
+  //       catergoryData = [];
+  //       for(var i=0; i<iterateData.length; i++) {
+  //         let indexData = iterateData[i];
+  //         let categoryCheck = indexData.categories[0].slug;
+  //         if(categoryCheck === 'category') {
+  //           mobileData.push(indexData);
+  //           console.log('mobile from cache', categoryData)
+  //         }
+  //       }
+  //       this.setState({
+  //         isLoading: false,
+  //         dataSource: this.state.dataSource.cloneWithRows(categoryData),
+  //       })
+  //     });
+  // }
 
   render() {
     console.log('category state', this.state);
